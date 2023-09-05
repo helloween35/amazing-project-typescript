@@ -18,8 +18,8 @@ export default class Main {
    */
   private init() {
     addEventListener("DOMContentLoaded", () => {
-      this.loginForm = new LoginForm();
       this.header = new Header();
+      this.loginForm = new LoginForm();
     });
   }
 }

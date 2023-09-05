@@ -5,7 +5,7 @@ export default class Common {
 	 * Lekérdezi a DOM-ból a #content elemet és készít belőle egy instance-t
 	 */
 	static getContainer() {
-		if(instance === undefined) {
+		if(Common.instance === undefined) {
 			Common.instance = document.getElementById("content");
 		}
 
@@ -19,9 +19,12 @@ export default class Common {
 	 * @private
 	 */
 	private renderElement(selector, html) {
-		const elements = Common.getContainer().getElementsByClassName(selector + "-container");
-		if (elements !== null) {
-			elements[0].innerHTML = html;
+		const container = Common.getContainer();
+		if(container) {
+			const elements = container.getElementsByClassName(selector + "-container");
+			if (elements !== null) {
+				elements[0].innerHTML = html;
+			}
 		}
 	}
 }
