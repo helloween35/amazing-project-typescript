@@ -31,13 +31,13 @@ export default class Header {
 	 */
 	private initListenUserLogin() {
 		const loginForm = document.getElementById("loginForm");
-		if (loginForm) {			
+		if (loginForm) {
 			loginForm.addEventListener("userLogin", () => {
 			 	this.loggedIn = true;
-
 			 	this.render();
 			}, false);
-		} 
+
+		}
 	}
 
 	/**

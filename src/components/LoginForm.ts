@@ -22,9 +22,7 @@ export default class LoginForm {
 	 * @private
 	 */
 	private initFormSubmission() {
-		const userLogin = new Event("userLogin");
 		const loginForm = document.getElementById("loginForm");
-
 		if (loginForm !== null) {
 			loginForm.addEventListener("submit", event => {
 				event.preventDefault();
@@ -46,8 +44,9 @@ export default class LoginForm {
 			nickname == localStorage.getItem("nickname") &&
 			password == localStorage.getItem("password")
 		) {
-			alert("Na, csak sikerült végre!");
+			const userLogin = new Event("userLogin");
 			loginForm.dispatchEvent(userLogin);
+			alert("Na, csak sikerült végre!");
 		} else {
 			alert("Elbasztad, rossz jelszó!");
 		}
