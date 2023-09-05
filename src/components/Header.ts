@@ -1,6 +1,8 @@
 import Common from '../common';
 
 export default class Header {
+	common : Common;
+	loggedIn : bolean;
 
 	public constructor() {
 
@@ -17,11 +19,17 @@ export default class Header {
 		this.init();
 	}
 
-	init() {
+	/**
+	 * Init metódusok gyűjtője
+ 	 */
+	private init() {
 		this.initListenUserLogin();
 	}
 
-	initListenUserLogin() {
+	/**
+	 * Figyeli, hogy elsült-e a userLogin esemény, ami akkor zajlik le, amikor a felhasználó SIKERESEN belép
+	 */
+	private initListenUserLogin() {
 		const loginForm = document.getElementById("loginForm");
 		if (loginForm) {			
 			loginForm.addEventListener("userLogin", () => {
@@ -32,7 +40,10 @@ export default class Header {
 		} 
 	}
 
-	render() {
+	/**
+	 * Összerakja a fejléc HTML vázát és meghívja a Common.renderElement metódust, ami kirajzolja a képernyőre
+	 */
+	private render() {
 		let html = `<nav class="navbar navbar-light bg-light d-flex justify-content-end mb-5">
 			<div class="container">
 				<form class="d-flex">
@@ -41,7 +52,7 @@ export default class Header {
 				</form>`
 				if (this.loggedIn) {
 					html += `	
-					<div id="profile">
+					<div class="profile">
 						<div class="alert alert-success mb-0">Beléptél</div>
 					</div>`;
 				}

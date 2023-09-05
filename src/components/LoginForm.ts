@@ -1,42 +1,63 @@
 import Common from '../common';
 
 export default class LoginForm {
+	private common : Common;
 
-	constructor() {
+	public constructor() {
 		this.common = new Common();
+
 		this.render();
 		this.init();
 	}
 
-	init() {
+	/**
+	 * Init metódusok gyűjtője
+	 */
+	private init() {
 		this.initFormSubmission();
 	}
 
-	initFormSubmission() {
+	/**
+	 * Amikor érzékeli, hogy a form submit megtörtént, megállítja a beápített mműködést
+	 * @private
+	 */
+	private initFormSubmission() {
 		const userLogin = new Event("userLogin");
 		const loginForm = document.getElementById("loginForm");
 
-		if (typeof loginForm !== "null") {
+		if (loginForm !== null) {
 			loginForm.addEventListener("submit", event => {
 				event.preventDefault();
-
-				const nickname = loginForm.getElementsByClassName("nickname")[0].value;
-				const password = loginForm.getElementsByClassName("password")[0].value;
-
-				if (
-					nickname == localStorage.getItem("nickname") &&
-					password == localStorage.getItem("password")
-				) {
-					alert("Na, csak sikerült végre!");	
-					loginForm.dispatchEvent(userLogin);
-				} else {
-					alert("Elbasztad, rossz jelszó!");	
-				}
+				this.submitForm(loginForm);
 			});
 		}
 	}
 
-	render() {
+	/**
+	 *
+	 * @param loginForm
+	 * @private
+	 */
+	private submitForm(loginForm : HTMLElement) {
+		const nickname = loginForm.getElementsByClassName("nickname")[0].value;
+		const password = loginForm.getElementsByClassName("password")[0].value;
+
+		if (
+			nickname == localStorage.getItem("nickname") &&
+			password == localStorage.getItem("password")
+		) {
+			alert("Na, csak sikerült végre!");
+			loginForm.dispatchEvent(userLogin);
+		} else {
+			alert("Elbasztad, rossz jelszó!");
+		}
+	}
+
+	/**
+	 * Összerakja a login form HTML vázát és meghívja a Common.renderElement metódust, ami kirajzolja a képernyőre
+	 * @private
+	 */
+	private render() {
 		const html = `
 		<div class="row">
 			<form id="loginForm">
