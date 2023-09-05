@@ -1,8 +1,8 @@
 import Common from '../common';
 
 export default class Header {
-	common : Common;
-	loggedIn : bolean;
+	private common : Common;
+	private loggedIn : bolean;
 
 	public constructor() {
 
