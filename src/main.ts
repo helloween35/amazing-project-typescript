@@ -1,14 +1,23 @@
 import Header from './components/Header';
 import LoginForm from './components/LoginForm';
+import Content from './components/Content';
 
 export default class Main {
   private loginForm : LoginForm;
   private header : Header;
+  private content : Content;
 
   /**
    * Konstruktor :)
    */
   public constructor() {
+    localStorage.setItem("nickname", "abc");
+    localStorage.setItem("password", "123");
+
+    if (localStorage.getItem("isLoggedIn") === null) {
+      localStorage.setItem("isLoggedIn", false);
+    }
+
     this.init();
   }
 
@@ -20,6 +29,7 @@ export default class Main {
     addEventListener("DOMContentLoaded", () => {
       this.loginForm = new LoginForm();
       this.header = new Header();
+      this.content = new Content();
     });
   }
 }

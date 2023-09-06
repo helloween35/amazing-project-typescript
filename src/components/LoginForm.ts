@@ -1,12 +1,15 @@
 import Common from '../common';
+import Auth from '../auth';
 
 export default class LoginForm {
 	private common : Common;
+	private auth : Auth;
 
 	public constructor() {
 		this.common = new Common();
+		this.auth = new Auth;
 
-		this.render();
+		this.renderLoginForm();
 		this.init();
 	}
 
@@ -26,7 +29,7 @@ export default class LoginForm {
 		if (loginForm !== null) {
 			loginForm.addEventListener("submit", event => {
 				event.preventDefault();
-				this.submitForm(loginForm);
+				this.submitForm();
 			});
 		}
 	}
@@ -36,7 +39,7 @@ export default class LoginForm {
 	 * @param loginForm
 	 * @private
 	 */
-	private submitForm(loginForm : HTMLElement) {
+	private submitForm() {
 		const nickname = loginForm.getElementsByClassName("nickname")[0].value;
 		const password = loginForm.getElementsByClassName("password")[0].value;
 
@@ -44,9 +47,8 @@ export default class LoginForm {
 			nickname == localStorage.getItem("nickname") &&
 			password == localStorage.getItem("password")
 		) {
-			const userLogin = new Event("userLogin");
-			loginForm.dispatchEvent(userLogin);
-			alert("Na, csak sikerült végre!");
+			this.auth.dispatchLoginEvent();
+			this.renderLoginForm();
 		} else {
 			alert("Elbasztad, rossz jelszó!");
 		}
@@ -56,10 +58,13 @@ export default class LoginForm {
 	 * Összerakja a login form HTML vázát és meghívja a Common.renderElement metódust, ami kirajzolja a képernyőre
 	 * @private
 	 */
-	private render() {
-		const html = `
-		<div class="row">
-			<form id="loginForm">
+	private renderLoginForm() {
+		console.log(localStorage.getItem("isLoggedIn"));
+		let html = `
+		<div class="row">`;
+
+		if (localStorage.getItem("isLoggedIn") == "false") {
+			html += `<form id="loginForm">
 				<div class="col mb-2">
 					<label>Név: </label>
 					<input type="text" id="nickname" name="nickname" class="form-control nickname" placeholder="Nickname" aria-label="Nickname">
@@ -71,8 +76,11 @@ export default class LoginForm {
 				<div class="col mt-3">
 					<button class="btn btn-primary">Belépek, baszod!</button>
 				</div>
-			</form>
-		</div>`;
+			</form>`;
+		} else {
+			html += `<div class="alert alert-warning">Már beléptél, minek akarnál megint? Stréber!</div>`;
+		}
+		html += `</div>`
 
 		this.common.renderElement("form", html);
 	}
